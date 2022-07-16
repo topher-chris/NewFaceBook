@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 using NewFaceBook.Models;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Xml.Linq;
 
 namespace NewFaceBook.ViewModels
 {
-    public class UserCreateViewModel
+    public class UserCreateViewModel 
     {
 
         [Required]

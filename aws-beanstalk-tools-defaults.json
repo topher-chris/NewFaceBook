@@ -1,0 +1,25 @@
+
+{
+    "region" : "us-west-1",
+    "configuration" : "Debug",
+    "framework"     : "netcoreapp3.1",
+    "self-contained" : false,
+    "application"    : "NewFaceBook",
+    "environment"    : "NewFaceBook-prod",
+    "enable-xray"    : false,
+    "enhanced-health-type" : "basic",
+    "additional-options"   : "\"aws:autoscaling:launchconfiguration,SecurityGroups\"=\"sg-0a71a6fc563d863a6,sg-0a10d6f0f8db8ae95\";\"aws:ec2:vpc,Subnets\"=\"subnet-0ad044e6a2aebba2c\";\"aws:ec2:vpc,ELBSubnets\"=\"subnet-080ad1af42e080548\";\"aws:ec2:vpc,ELBScheme\"=\"public\"",
+    "solution-stack"       : "64bit Windows Server Core 2016 v2.10.0 running IIS 10.0",
+    "environment-type"     : "SingleInstance",
+    "cname"                : "newfacebook-prod",
+    "instance-type"        : "t3a.medium",
+    "key-pair"             : "mysql",
+    "instance-profile"     : "aws-elasticbeanstalk-ec2-role",
+    "service-role"         : "aws-elasticbeanstalk-service-role",
+    "proxy-server"         : "nginx",
+    "loadbalancer-type"    : "application",
+    "health-check-url"     : "/",
+    "profile"              : "agentfb",
+    "iis-website"          : "Default Web Site",
+    "app-path"             : "/"
+}

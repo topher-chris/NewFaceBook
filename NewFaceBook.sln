@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewFaceBook", "NewFaceBook.csproj", "{A5A3076A-C2AB-498D-933F-5B343B611334}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewFaceBook", "NewFaceBook.csproj", "{A5A3076A-C2AB-498D-933F-5B343B611334}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

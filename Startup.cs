@@ -10,6 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace NewFaceBook
 {
@@ -27,39 +31,67 @@ namespace NewFaceBook
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContextPool<AppDbContext>(
-                options => options.UseSqlServer(_config.GetConnectionString("NewFaceBookDBConnection")));
+                options => options.UseSqlServer(_config.GetConnectionString("NewFaceBookDBConnection22")));
 
+           services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 2;
+                  }).AddEntityFrameworkStores<AppDbContext>();
+          
+        //                .AddDefaultTokenProviders();
+
+          
             services.AddControllersWithViews();
-            services.AddMvc().AddXmlSerializerFormatters();
+            services.AddMvc(options =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                                .RequireAuthenticatedUser()
+                                .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            }).AddXmlSerializerFormatters();
             services.AddScoped<IUserRepository, SQLUserRepository>();
+            services.AddMvc(option => option.EnableEndpointRouting = false);
+          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            
+                if (env.IsDevelopment())
+                {
+                    app.UseDeveloperExceptionPage();
+                }
+                else
+                {
+                    //app.UseExceptionHandler("/Error");
+                    app.UseExceptionHandler("/Home/Error");
+                    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                    app.UseHsts();
+                }
+            try
             {
-                app.UseDeveloperExceptionPage();
+                // app.UseHttpsRedirection();
+                app.UseStaticFiles();
+               app.UseAuthentication();
+
+            //    app.UseRouting();
+
+                app.UseAuthorization();
+
+                app.UseMvc(routes =>
+                {
+                    routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                });
             }
-            else
+            catch (System.Exception exp)
             {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+
+                throw exp;
             }
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
 
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-            });
         }
+
     }
 }

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace NewFaceBook.Models
 {
-    public interface IUserRepository
+    public interface IUserRepository 
     {
         User GetUser(int Id);
         IEnumerable<User> GetAllUser();
